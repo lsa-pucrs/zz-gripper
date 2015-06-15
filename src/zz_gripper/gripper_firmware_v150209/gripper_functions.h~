@@ -1,0 +1,321 @@
+/*
+Force Sensor A201-25 (0-25 lb. force range 111.205N) acessado em http://www.phidgets.com/documentation/Phidgets/3100_0_FlexiforceUserManual.pdf
+Rotation Speed ~38.27rpm source: Motor Pololu 70:1 = 150RPM em 12v =  (((15.0/21)**2)*150)/2^= ~38.27
+
+Servo mg996:
+Velocidade de operação: 0.13sec / 60 graus (6.0V sem carga) = 0.174seg 80graus
+Torque Stall: 15 kg-cm (208,3 oz-in) em 6V
+*/
+#include <PWMServo.h>
+#include <ros.h>
+#include <std_msgs/String.h>
+#include <std_msgs/UInt8.h>
+#include <std_msgs/UInt16.h>
+#include <std_msgs/Int16.h>
+
+//digital pins
+#define servoRPin 10
+#define servoLPin 9
+#define trigPin 8 
+#define echoPin 7 
+#define pwmPin 6
+#define dirPin 5
+#define inputBPin 4
+#define homePin 3
+//inputAPin 2 -> interrupt 0
+
+//analogic pins
+#define forceSensorPin 0
+#define BAUDRATE 9600
+
+
+//commandVariables
+String readString; //para entrada serial
+String commandName="";
+int16_t commandValue=0;
+
+//gripperVariables
+boolean gripperActive = true;
+uint16_t gripperSpeedSetPoint = 50;
+std_msgs::UInt16 topicSpeed;
+int16_t gripperPosition;
+int16_t gripperPositionSetPoint;
+std_msgs::Int16 topicPosition;
+int8_t gripperMode = 0; //0 open/ 1 close/ 2 auto
+int8_t lastGripperMode = 1;
+PWMServo gpp_R;  
+PWMServo gpp_L; 
+boolean gripperState = false;
+//Right 45 min, 60 mid, 150 max 
+int16_t gpp_RMax = 136;///160;
+int16_t gpp_RMin = 55;
+//Left 145 min, 120 mid, 50 max
+int16_t gpp_LMax = 34; //30
+int16_t gpp_LMin = 120;
+//////////////////////////
+int16_t gpp_RPos = gpp_RMin;
+int16_t gpp_LPos = gpp_LMin;
+
+//sonar
+uint8_t gripperDistance;
+uint8_t gripperDistanceSetPoint = 15;
+std_msgs::UInt8 topicDistance;
+boolean sonarActive = false;
+boolean sonarFlag = false; //when it found something
+
+//forceSensor
+uint16_t gripperForce;
+std_msgs::UInt16 topicForce;
+uint16_t gripperForceSetPoint = 700; //hard 0; easy 1024; to activate
+
+//encoder
+std_msgs::Int16 topicRotationX;
+int16_t gripperRotationXSetPoint;
+volatile int16_t gripperRotationX = 0;
+volatile boolean inputB = false;
+double n = 0;
+double pwmValue = 0;
+
+//general
+int val;
+unsigned long time;
+unsigned long lastTime;
+unsigned long lastTimeClosed;
+unsigned long lastTimeSpinOnce;
+
+ros::NodeHandle nh;
+std_msgs::String status_msg;
+void callCommand( const std_msgs::String& gripper_msg);
+
+ros::Subscriber<std_msgs::String> subGripperCommands("gripperCommands" , callCommand);
+
+ros::Publisher advGripperSpeed("gripperSpeed", &topicSpeed);
+ros::Publisher advGripperForce("gripperForce", &topicForce);
+ros::Publisher advGripperPosition("gripperPosition", &topicPosition);
+ros::Publisher advGripperDistance("gripperDistance", &topicDistance);
+ros::Publisher advGripperRotationX("gripperRotationX", &topicRotationX);
+
+void callCommand( const std_msgs::String& gripper_msg){
+  readString=gripper_msg.data;
+}
+
+
+
+void setup()   {
+  pinMode(dirPin,OUTPUT);
+  pinMode(pwmPin,OUTPUT);
+  pinMode(inputBPin,INPUT); //inputB // white wire
+  pinMode(homePin,INPUT);
+  attachInterrupt(0,incA,FALLING); //pin 2 inputA // yellow wire
+
+  //gripper
+  gpp_R.attach(servoRPin);  
+  gpp_L.attach(servoLPin);
+  //#gripper
+  nh.initNode();
+  nh.subscribe(subGripperCommands);
+
+  //nh.advertise(advGripperState);
+  nh.advertise(advGripperSpeed);
+  nh.advertise(advGripperForce);
+  nh.advertise(advGripperPosition);
+  nh.advertise(advGripperDistance);
+  nh.advertise(advGripperRotationX);
+
+  nh.spinOnce();
+  delay(50);
+  homeRoutine();
+}
+
+void loop(){
+  computeEncoderX(gripperRotationXSetPoint); //controle da gripper
+
+  //ros publishers
+  //topicSpeed.data = gripperSpeed;
+  //advGripperSpeed.publish(&topicSpeed);
+  topicForce.data = gripperForce;
+  advGripperForce.publish(&topicForce);
+  topicPosition.data = gripperPosition;
+  advGripperPosition.publish(&topicPosition);
+  topicRotationX.data = gripperRotationX;
+  advGripperRotationX.publish(&topicRotationX);
+  topicDistance.data = gripperDistance;
+  advGripperDistance.publish(&topicDistance);
+
+  //timer delay
+  time = millis();
+  unsigned long wait = time - lastTime;  
+  if(wait >= 100){ //amory: declarar como constante
+    lastTime = time;
+    computeCommand(readString);
+  }
+
+  updateGripperActions();
+
+  unsigned long waitSpinOnce = time - lastTimeSpinOnce;  
+  if(waitSpinOnce >= 50){ 
+    lastTimeSpinOnce = time;
+    nh.spinOnce(); //evitar delay pois afeta na movimentacao da gripper
+  }
+}
+
+
+void computeCommand(String rawInput){
+  String auxName = "";
+  int16_t auxValue = 0;
+  int firstCharIndex = rawInput.indexOf('_');
+  if(firstCharIndex<0) firstCharIndex = rawInput.indexOf(' '); //multiplos comandos
+  if(firstCharIndex>0){
+    String numberCommand = "";
+    for(int i = firstCharIndex+1; i < rawInput.length(); i++){ //se rawInput.length()-1 nao le a ultima string
+      numberCommand += rawInput[i];
+    }
+    auxValue = numberCommand.toInt();
+    for(int i = 0; i < firstCharIndex; i++){
+      auxName+=rawInput[i];
+    }
+  }
+  else{ //if index <= 0
+    auxValue = rawInput.toInt();
+    auxName = rawInput; 
+  }
+  commandValue=auxValue;
+  commandName=auxName;
+}
+
+void updateGripperActions(){
+  if(commandName=="help")helpToPrint();
+  else if(commandName=="close"){
+    if(commandValue==101){
+      if(sonarFlag)sonarActive = false;
+      else sonarActive = true;
+      close();
+    }
+    else close(commandValue);
+  }
+  else if(commandName=="open"){
+    sonarFlag = false; //para resetar sonar na closeRoutine()
+    open();
+  }
+  else if(commandName=="setForce")gripperForceSetPoint = commandValue;
+  else if(commandName=="setSpeed")gripperSpeedSetPoint = commandValue;
+  else if(commandName=="setDistance")gripperDistanceSetPoint = commandValue;
+  else if(commandName=="rotate")gripperRotationXSetPoint = commandValue;
+  //else rosPrint("Unknown command!");
+}
+
+
+/*void rosPrint(char message){
+  std_msgs::String msg;
+  msg.data = message;
+  nh.loginfo(msg.data);
+}*/
+
+void helpToPrint(){}
+
+boolean close(){return close(100);}
+boolean close(int newPos){return close(newPos,gripperSpeedSetPoint);}
+boolean close(uint16_t newPos,uint16_t newSpeed){
+  if(closeRoutine()){
+    int16_t setPointR = map(newPos,0,100,gpp_RMin,gpp_RMax);
+    int16_t setPointL = map(newPos,0,100,gpp_LMin,gpp_LMax);
+    time = millis();
+    unsigned long waitClosed = time - lastTimeClosed;
+    if(waitClosed >= newSpeed){ 
+      lastTimeClosed = time;
+      if(gpp_RPos<setPointR)gpp_RPos+=1; //close R
+      if(gpp_RPos>setPointR)gpp_RPos-=1; //open R
+      if(gpp_LPos>setPointL)gpp_LPos-=1; //close L
+      if(gpp_LPos<setPointL)gpp_LPos+=1; //open L 
+      gpp_R.write(gpp_RPos);
+      gpp_L.write(gpp_LPos); 
+      return true;
+    }
+    
+  }
+  return false;
+}
+
+boolean open(){
+  gpp_RPos = gpp_RMin;
+  gpp_LPos = gpp_LMin;
+  gpp_R.write(gpp_RPos); //45 min, 60 mid, 150 max  
+  gpp_L.write(gpp_LPos);//145 min, 120 mid, 50 max
+}
+
+boolean closeRoutine(){
+  gripperForce = analogRead(forceSensorPin);//map(gripperForce,0,111,1023,0); //4.2v = 111N = 11.34kg
+  if(gripperForce<gripperForceSetPoint+200)return false; //200 é o offset descoberto por testes
+
+  if(sonarActive){
+    gripperDistance = measureDistance();
+    if(gripperDistance>gripperDistanceSetPoint)return false;
+    else sonarFlag = true;
+  }
+  return true;
+}
+
+void computeEncoderX(int16_t input){
+  int16_t setPoint = gripperRotationX; 
+  int16_t erro = setPoint - (-1*input); // -1* inverte rotacao
+  int kp=10;//50; muito rigida
+  int16_t cp1 = 120+kp*map(erro,0,600,0,-255);
+  int16_t cp2 = 120+kp*map(erro,0,600,0,255); // 600 é o angulo max (90°)
+  if(cp1>255)cp1=255;
+  if(cp2>255)cp2=255;
+  if(cp1<0)cp1=0;
+  if(cp2<0)cp2=0;
+  analogWrite(dirPin,cp1);
+  analogWrite(pwmPin,cp2); //0   
+}
+
+void incA(){
+  inputB = digitalRead(inputBPin);
+  if(inputB)gripperRotationX--;
+  else gripperRotationX++;
+}
+
+void homeRoutine(){
+  open();
+  uint16_t homePos = 0;
+  while(!digitalRead(homePin)){
+    homePos--;
+    computeEncoderX(homePos);
+    delay(2);
+  }
+  gripperRotationX = 0;
+  gripperRotationXSetPoint=450;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+uint8_t measureDistance()
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+{
+  uint8_t maximumRange = 200; // Maximum range needed
+  uint8_t minimumRange = 0; // Minimum range needed
+  uint16_t duration; 
+  uint8_t distance; // Duration used to calculate distance
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  
+  /* The following trigPin/echoPin cycle is used to determine the
+  distance of the nearest object by bouncing soundwaves off of it. */ 
+  digitalWrite(trigPin, LOW); 
+  delayMicroseconds(2); 
+  
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10); 
+   
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+   
+  //Calculate the distance (in cm) based on the speed of sound.
+  distance = duration/58.2; //g
+   
+  if (distance >= maximumRange || distance <= minimumRange){
+  ///* Send a negative number to computer to indicate "out of range" */
+    return 0;
+  }
+  else return distance;//g
+}
+
