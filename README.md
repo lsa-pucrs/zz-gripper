@@ -20,7 +20,8 @@ Esta gripper foi desenvolvida no laboratório visando aplicações _pick-and-pla
 + Dimenções: ?
 + Força aplicada a objeto: ~500g
 + Peso máximo de sustentação: ~700g
-+ 
+
+
 ####Instalação do driver:####
 As instruções de instalação do driver estão no Readme do branch hydro-devel.
 Para baixa só o driver usar o comando:
