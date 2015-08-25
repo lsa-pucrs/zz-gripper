@@ -3,12 +3,17 @@
 
 ######Instalation######
 $cd ~/catkin_ws/src/
-$git clone bla -b hydro-devel
+
+$git clone https://github.com/lsa-pucrs/zz-gripper -b hydro-devel
+
 $cd ~/catkin_ws/
+
 $catkin_make
+
 $source ~/catkin_ws/devel/setup.bash
 
 
-######Use######
+
+######Use Example######
 $roslaunch zz_gripper teleop.launch
 
