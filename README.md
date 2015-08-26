@@ -10,7 +10,7 @@
   $source ~/catkin_ws/devel/setup.bash  
 
 ###To use the example###
-  $sudo chmod 666 /dev/ttyUSB0
+  $sudo chmod 666 /dev/ttyUSB0  
   $roslaunch zz_gripper teleop.launch 
 
 ###To send a command (by terminal)###
