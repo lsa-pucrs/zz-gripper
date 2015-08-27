@@ -6,7 +6,7 @@
   $cd ~/catkin_ws/src/  
   $git clone https://github.com/lsa-pucrs/zz-gripper -b hydro-devel  
   $cd ~/catkin_ws/  
-  $catkin_make  
+  $catkin_make_isolated  
   $source ~/catkin_ws/devel/setup.bash  
 
 ###To use the example###
@@ -18,7 +18,7 @@
   Obs: To send a command from the code, just publish an string message in the /gripperCommands one of the following commands  
 
 ###Command list:###
-  close_101     :close when sonar detects an object   
+  close_101     :close when sonar detects an object at the set distance 
   close_X       :(open 0, close 100)  
   setForce_X    :default 50 (strong 0; weak 1024)  
   setSpeed_X    :default 50   
