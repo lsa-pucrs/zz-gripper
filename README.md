@@ -9,9 +9,10 @@
   $catkin_make_isolated  
   $source ~/catkin_ws/devel/setup.bash  
 
-###To use the example###
+###To use the example### 
   $sudo chmod 666 /dev/ttyUSB0  
   $roslaunch zz_gripper teleop.launch 
+  Obs: The keys will send strings to the /gripperCommands topic and can be used in the same time that rostopic publishs.
 
 ###To send a command (by terminal)###
   $rostopic pub -1 /gripperCommands std_msgs/String "close_50"  
