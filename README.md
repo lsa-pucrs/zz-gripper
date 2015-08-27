@@ -24,8 +24,6 @@ Esta gripper foi desenvolvida no laboratório visando aplicações _pick-and-pla
 
 ####Instalação do driver:####
 As instruções de instalação do driver estão no Readme do branch hydro-devel.
-Para baixa só o driver usar o comando:
-$git clone https://github.com/lsa-pucrs/zz-gripper -b hydro-devel
 
 ####TO-DO_List:####
 - [ ] Manual ZZ-Gripper v1.0
