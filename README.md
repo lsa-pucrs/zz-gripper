@@ -18,7 +18,7 @@
   Obs: To send a command from the code, just publish an string message in the /gripperCommands one of the following commands  
 
 ###Command list:###
-  close_101     :close when sonar detects an object at the set distance 
+  close_101     :close when sonar detects an object at the set distance  
   close_X       :(open 0, close 100)  
   setForce_X    :default 50 (strong 0; weak 1024)  
   setSpeed_X    :default 50   
