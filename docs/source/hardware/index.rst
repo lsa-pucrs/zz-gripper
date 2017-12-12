@@ -21,18 +21,6 @@ The ROS version is Kinetic Kame. Kinetic was released early last year and is com
 - Use `Etcher <https://etcher.io/>`_ to burn the image to SD cards & USB drives, safely and easily
 - Image ready, let's install ROS!
 
-***************
-Install ROS
-***************
-The first step in installing ROS on Raspberry Pi 3 is :  
-- Followed the steps on the download page, and within minutes I managed to have a Pi 3 running Ubuntu Mate.
-
-- **Step 1:** Go to System -> Administration -> Software & Updates
-- **Step 2:** Check the checkboxes to repositories to allow “restricted,” “universe,” and “multiverse.”
-- **Step 3:** Setup your sources.list
-
-
-- show fritzing schematics to connect the sensors, power, other boards, etc 
 
 
 
