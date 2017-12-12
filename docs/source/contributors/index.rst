@@ -5,8 +5,8 @@ LSA Contributors
  
 The list of contributors to this document.
 
-	* @Guilher Marques
-
-	* @Desiree Santos
-
 	* `@Alexandre Amory <https://amamory.github.io/>`_
+
+	* `@Guilherme Marques <https://github.com/marquesgh2m>'`
+
+	* `@Desiree Santos <https://github.com/marquesgh2m>`
