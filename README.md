@@ -5,7 +5,7 @@ Robô desenvolvido no Laboratório de Sistemas Autônomos, [LSA](https://www.inf
 Esta gripper foi desenvolvida no laboratório visando aplicações _pick-and-place_ em conjunto com o robo Turtlebot V2.
 
 <p align="center">
-<img src="resources/zz-gripper-turtle-rasp.jpg" width="510" height="681">
+<img src="resources/zz-gripper-turtle-rasp.jpg" width="310" height="281">
 </P>
 
 #### Especificações:
