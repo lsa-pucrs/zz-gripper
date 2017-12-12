@@ -27,8 +27,8 @@ Esta gripper foi desenvolvida no laboratório visando aplicações _pick-and-pla
 + Câmera Raspberry Pi v2 8MP
 
 #### Instalação do driver:
-**Versão Arduino:**
-Em construção.
+**Versão Raspberry:**
+As instruçoes de instalação serão adicionadas no [site](http://zz-gripper.readthedocs.io/en/imr-2017/)
 
 **Versão Arduino:**
 As instruções de instalação do driver para utilizar o robô com  no Readme do branch [hydro-devel](https://github.com/lsa-pucrs/zz-gripper/tree/hydro-devel).
