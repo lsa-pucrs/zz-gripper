@@ -7,12 +7,9 @@ Gripper robot was designed with microprocessor `Raspberry Pi version 3 <https://
 . 
 You will find a guide to setting up the hardware: Raspberry Pi and circuit schematic.
 
-Raspberry
+SDCard Image
 ===============
 
-***************
-SDCard Image
-***************
 The OS version used on Raspberry Pi 3 is Ubuntu MATE 16.04.2.
 The ROS version is Kinetic Kame. Kinetic was released early last year and is compatible with `Ubuntu Mate 16.04 <https://ubuntu-mate.org/raspberry-pi/>`_
 . 
