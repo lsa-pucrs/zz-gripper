@@ -3,12 +3,11 @@
 Getting Started
 ===============
 
-Before going into the tutorials, follow the instructions below to prepare your environment. 
- 
+This is the oficial documentation for Inteligent Gripper.
+Gripper was made in the autonomous systems laboratory, LSA, of FACIN at PUCRS. It was developed in the laboratory for pick-and-place applications in conjunction with the Turtlebot theft.
 
-.. toctree::
-   
-   About the Boats <about>
-   Bill of Materials <bill-of-materials>
-   Required Bachground <background>
+
+Engage with us in this project and feel free to send feedback and suggestions.
+Before going into the tutorials, follow the instructions below to prepare your environment. 
+
 
