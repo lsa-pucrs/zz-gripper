@@ -22,4 +22,4 @@ The ROS version is Kinetic Kame. Kinetic was released early last year and is com
 
 .. toctree::
 
-Raspberry <rpi>
+Raspberry Pi <RPi>
