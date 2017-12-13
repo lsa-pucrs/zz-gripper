@@ -20,11 +20,10 @@ The ROS version is Kinetic Kame. Kinetic was released early last year and is com
 
 
 
+Raspberry
+===============
+
+
 .. toctree::
 
-   Raspeberrry <rpi>
-   Setting Up the OS <setup-os>
-   Installing ROS <ros>
-   Hooking Up Peripherals to the Rpi board <periph>
-   Setup Video streamming <video/index>
-   Testing the Rpi <testing>
+   Raspberrry <rpi>
