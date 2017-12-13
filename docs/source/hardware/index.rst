@@ -20,3 +20,9 @@ The ROS version is Kinetic Kame. Kinetic was released early last year and is com
 - Download `Ubuntu Mate image <https://ubuntu-mate.org/download/>`_ for raspiberry 2/3 - Version 16.04 (Xenial)
 - Use `Etcher <https://etcher.io/>`_ to burn the image to SD cards & USB drives, safely and easily
 - Image ready, let's install ROS!
+
+
+
+.. toctree::
+
+Raspberry <rpi>
