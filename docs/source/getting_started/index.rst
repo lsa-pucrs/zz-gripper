@@ -4,7 +4,7 @@ Getting Started
 ===============
 
 This is the oficial documentation for Inteligent Gripper.
-Gripper was made in the autonomous systems laboratory, LSA, of FACIN at PUCRS. It was developed in the laboratory for pick-and-place applications in conjunction with the Turtlebot theft.
+It was made in the autonomous systems laboratory, LSA, of FACIN at PUCRS. It was developed in the laboratory for pick-and-place applications in conjunction with the Turtlebot theft.
 
 
 Engage with us in this project and feel free to send feedback and suggestions.
