@@ -1,4 +1,4 @@
-vMaking Raspberry Pi usable
+Making Raspberry Pi usable
 ==========================
 
 Introduction
