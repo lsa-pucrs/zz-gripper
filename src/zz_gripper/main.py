@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 import rospy, cv2, time
 
-from modules.Camera import camera_calibration
-from modules.Image import raspicam_image
-from modules.Control_twist import  cmd_vel_node
+from modules.Image import image
+from modules.Camera import camera
+from modules.Robot import robot
 
 # --------------------------------------------
 # This is the main executable for the robot
@@ -11,18 +11,19 @@ from modules.Control_twist import  cmd_vel_node
 
 class Gripper(object):
 	def __init__(self):
-		cc = camera_calibration()
-		img = raspicam_image()
-		gripper = cmd_vel_node()	
 
+		cam = camera()
+		img = image()
+		gripper = robot()
+		
 		#  wait camera
 		time.sleep(3.0)
 
 		while(1):			
-			cv2.imshow("Video", cc.showImage)
-			cv2.imshow("Mask Target", img.mask_img(cc.showImage))
+			cv2.imshow("Video", cam.showImage)
+			cv2.imshow("Masked Video", img.masked(cam.showImage))
 			
-			if img.find_object:
+			if image.find_object:
 				gripper.forward()
 			else:
 				gripper.turn()

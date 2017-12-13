@@ -3,10 +3,10 @@ import time
 import RPi.GPIO as GPIO
 import Adafruit_ADS1x15
 
-class control_raspberry(object):
+class raspberry(object):
 
 	def __init__(self):
-		self.needOpenArm = False
+		self.flagOpenArm = False
 
 		self.interval = 0.1
 		distance = 0
@@ -24,8 +24,11 @@ class control_raspberry(object):
 		self.tri = 20
 		self.echo = 26	
 
-		# MOTOR LEFT/RIGHT
+		# GPIO SETUP
 		GPIO.setmode(GPIO.BCM)
+		GPIO.setwarnings(False)
+
+		# MOTOR LEFT/RIGHT
 		GPIO.setup(HAND_LEFT, GPIO.OUT)
 		GPIO.setup(HAND_RIGHT, GPIO.OUT) 
 
@@ -51,49 +54,41 @@ class control_raspberry(object):
 		####################################
 
 	def openArm(self):
-		if self.needOpenArm == False:
-			self.needOpenArm = True
+		if self.flagOpenArm == False:
+			self.flagOpenArm = True
 		self.openHands()
 
 
-	def isCloseToPickTarget(self):	
+	def checkObjectDistance(self):	
 		minTargetDistance = 0.12
 		distance = self.sonarDistance()
 		time.sleep(self.interval)
 
 		return  True if distance <= minTargetDistance else False
 		
-	def forward():
+	def up():
 		(GPIO.output(BIN1, GPIO.HIGH))
 		(GPIO.output(BIN2, GPIO.LOW))
 		(GPIO.output(STBY, GPIO.HIGH))
 		(GPIO.output(PWMB, GPIO.HIGH))
 
-	def reverse():
+	def down():
 		(GPIO.output(BIN1, GPIO.LOW))
 		(GPIO.output(BIN2, GPIO.HIGH))
 		(GPIO.output(STBY, GPIO.HIGH))
 		(GPIO.output(PWMB, GPIO.HIGH))
 
-	def off():
-		(GPIO.output(BIN1, GPIO.LOW))
-		(GPIO.output(BIN2, GPIO.LOW))
-		(GPIO.output(STBY, GPIO.LOW))	
-		(GPIO.output(PWMB, GPIO.LOW))
-
 	def closeHands(self):
-
 		self.anguleLeft = self.anguleLeft + 1
 		self.anguleRight = self.anguleRight - 1
 
 		self.handLeft.ChangeDutyCycle(self.anguleLeft)
 		self.handRight.ChangeDutyCycle(self.anguleRight)	
-		self.needOpenArm = True
-		
+
+		self.flagOpenArm = True		
 		time.sleep(1)
 						
 	def openHands(self):	
-
 		self.anguleLeft = 5.5
 		self.anguleRight = 9.5
 		self.handLeft.ChangeDutyCycle(self.anguleLeft)
@@ -117,13 +112,15 @@ class control_raspberry(object):
 
 		return round(distance/100,2)
 
-	def hasObjectOnHand(self):		
-		GAIN = 1
+	# Check pression sensor
+	def checkPression(self):		
+		gain = 1
 		flag= False
-		ANALOG_CHN = 0
-		HOLD_OBJECT_VALUE = 20000
-
-		if  self.adc.read_adc(ANALOG_CHN, gain=GAIN) < HOLD_OBJECT_VALUE:
+		analog_chn = 0
+		force = 20000
+	
+		if  self.adc.read_adc(analog_chn, gain=gain) < force:
 	  		flag =True
+			self.up()
+	
 		return flag
-
