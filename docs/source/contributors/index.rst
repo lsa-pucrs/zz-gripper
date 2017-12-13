@@ -9,4 +9,4 @@ The list of contributors to this document.
 
 	* `@Guilherme Marques <https://github.com/marquesgh2m>`_
 
-	* `@Desiree Santos <https://github.com/marquesgh2m>`_
+	* `@Desiree Santos <https://github.com/desireesantos>`_
