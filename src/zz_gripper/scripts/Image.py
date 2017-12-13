@@ -17,13 +17,15 @@ class image():
 		self._latestMaskedImage = None
 		self._flagFindObject = 0
 
+
 	def lastest_img(self, data):
 		try:
 			self._latestImage = self.bridge.imgmsg_to_cv2(data, "bgr8")
 			return self._latestImage
 		except CvBridgeError as e:
 			print(e)
-		
+
+
 	def masked(self, data):
 		hsv = cv2.cvtColor(data, cv2.COLOR_BGR2HSV)
 		lower = np.array(Color.LOW_YELLOW)
@@ -32,8 +34,9 @@ class image():
 		self._latestMaskedImage = cv2.inRange(hsv, lower, upper) 
 		return self._latestMaskedImage 
 
-	def find_object(self):
 
+	def find_object(self):
+		# TODO: Refactoring
 		# From mask data, find the center point 
 		h, w, d = self._latestMaskedImage.shape
     search_top = 3*h/4
@@ -55,7 +58,6 @@ class image():
      # Find yellow circle 
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 		img = cv2.medianBlur(gray,5)
-		cimg = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
 		circles = cv2.HoughCircles(img,cv2.HOUGH_GRADIENT,1,20, param1=50,param2=30,minRadius=0,maxRadius=0)    
 	
 		return  True if len(circle) >= 1 else False 	
