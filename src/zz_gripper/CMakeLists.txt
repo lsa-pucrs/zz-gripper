@@ -7,7 +7,7 @@ project(zz_gripper)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
-  rosserial_python
+  raspicam
   std_msgs
 )
 

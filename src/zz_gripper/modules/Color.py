@@ -18,11 +18,6 @@ class Color(object):
 	LOW_YELLOW = [20, 100, 100]
 	UPPER_YELLOW = [40, 255, 255]
 
-	"""
-	Blue range - to test
-	LOW_BLUE = [110,50,50]
-	UPPER_BLUE = [138,255,255]
-	"""
 
 	class __metaclass__(type):
 		def __getattr__(self, name):

@@ -1,7 +1,0 @@
-<launch>
-  <!-- This assumes roscore is running on this machine -->
-  <env name="ROS_MASTER_URI" value="http://$(env ROS_HOSTNAME):11311"/>
-
-  <node pkg="rosserial_python" type="serial_node.py" args="/dev/ttyUSB0" name="serial_node" respawn="true"/>
-  <node pkg="zz_gripper" type="teleop_keyboard.py" name="zz_gripper_teleop" output="screen"/>
-</launch>

@@ -13,12 +13,8 @@ class camera_calibration():
 
 		""" VARIABLES """
 		self.showImage = None
-		self.hasImage = False	
-
 
 	def cvt_image(self, data):
 		self.showImage =  raspicam_image().lastest_img(data)
-						
-		if self.hasImage != True:
-			self.hasImage = True	
+
 	
