@@ -43,20 +43,17 @@ The first step in installing ROS on Raspberry Pi 3 is :
 		sudo apt-get update
 
 - **Step 6:** Install ros-kinetic-desktop-full
-
 	.. code-block:: bash
 
 		sudo apt-get install ros-kinetic-desktop-full
 
 - **Step 7:** Initialize rosdep
-
 	.. code-block:: bash
 
 		sudo rosdep init
 		rosdep update
 
 - **Step 8:** Setting up the ROS environment variables
-
 	.. code-block:: bash
 
 		echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
@@ -80,5 +77,5 @@ The first step in installing ROS on Raspberry Pi 3 is :
 - **Step 11:** Check the ROS environment variables
 
 		.. code-block:: bash
-		export | grep ROS
+			export | grep ROS
 
