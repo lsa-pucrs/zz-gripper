@@ -19,21 +19,23 @@ class Gripper(object):
 		#  wait camera
 		time.sleep(3.0)
 
-		while(1):			
+		while(1):		
 			cv2.imshow("Video", cam.showImage)
 			cv2.imshow("Masked Video", img.masked(cam.showImage))
 			
-			if image.find_object:
-				gripper.forward()
+			if img.find_object(cam.showImage):
+				if gripper.centralized(img.masked(cam.showImage),cam.showImage):
+					gripper.forward()
+				else:
+					gripper.turn()
 			else:
 				gripper.turn()
-
 			cv2.waitKey(1) & 0xFF
 			
 		cv2.destroyAllWindows()
 def main():
 
-	rospy.init_node('gripper', anonymous=True)
+	rospy.init_node('gripper', anonymous=False)
 	robot = Gripper()
 	rospy.spin()
 	
