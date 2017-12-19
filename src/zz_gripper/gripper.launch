@@ -1,0 +1,7 @@
+<launch>
+  <!-- This assumes roscore is running on this machine -->
+  <env name="ROS_MASTER_URI" value="http://$(env ROS_HOSTNAME):11311"/>
+
+  <node pkg="raspicam_node" type="serial_node.py" args="/dev/ttyUSB0" name="serial_node" respawn="true"/>
+  <node pkg="zz_gripper" type="main.py" name="gripper" output="screen"/>
+</launch>
