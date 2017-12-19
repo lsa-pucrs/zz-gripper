@@ -10,7 +10,7 @@ Installing the Raspicam
 The v2 Camera Module has a Sony IMX219 8-megapixel sensor (compared to the 5-megapixel OmniVision OV5647 sensor of the original camera).
 
  - You can buy the Raspberry Pi Camera Module v2 on oficial website 
-	* `oficial website <https://www.raspberrypi.org/products/camera-module-v2/>`_
+	`oficial website <https://www.raspberrypi.org/products/camera-module-v2/>`_
  - The lab LSA has the camera module V2 `Thisavailable to prototype https://lsa-pucrs.github.io/resources/>`_
  - Power supply is provided by board, you just need to plug
  - The require material is only flat cable to connect the camera into raspberry
