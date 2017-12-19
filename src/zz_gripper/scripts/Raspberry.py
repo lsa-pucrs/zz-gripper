@@ -3,7 +3,7 @@ import time
 import RPi.GPIO as GPIO
 import Adafruit_ADS1x15
 
-class raspberry(object):
+class control_raspberry(object):
 
 	def __init__(self):
 		self.flagOpenArm = False
@@ -124,3 +124,4 @@ class raspberry(object):
 			self.up()
 	
 		return flag
+
