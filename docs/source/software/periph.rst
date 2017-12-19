@@ -5,14 +5,6 @@ Hooking Up Peripherals to the Raspberry Pi
 
 This section shows how to add the following peripherals to the RPi board
 
-
-
-.. WARNING::
-
-  @ To be done by Desirre
-
-
-
 Installing the Raspicam
 -----------------------------
 The v2 Camera Module has a Sony IMX219 8-megapixel sensor (compared to the 5-megapixel OmniVision OV5647 sensor of the original camera).

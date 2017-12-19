@@ -3,12 +3,7 @@
 Setting Up the Software
 ===============
 
-.. WARNING::
-
-  @ To be done by Desiree
-
-
-
+This session We'll presente details about each topic.
 
 .. toctree::
 

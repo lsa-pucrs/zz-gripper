@@ -10,15 +10,12 @@ About the Gripper
 .. image:: ./source/gripper.png
     :align: center
 
-
-talk a little bit about the gripper and the purpose of this document.
-
-show some youtube video of the gripper in action.
+Gripper intelignte robot presents how a pick and place robot can be designed with a low cost hardware and robust embedded software. Various problems and obstructions for the loading process has been analyzed and been taken into consideration while designing the pick and place robot.
 
 Autonomous Systems Laboratoty - PUCRS
 --------------------------------------
 
-talk about LSA, link to the webpage
+`LSA <https://lsa-pucrs.github.io/>`_ is devoted mainly to environmental, humanitarian, educational, and industrial applications for the benefit of mankind. The laboratory combines researchers from different areas (embedded systems, computer vision, AI) to design innovative solutions, bridging the existing robotics research gap between hardware and software. The laboratory has a complete set of programmable robotics resources including different mobile platforms (boats, rotatory wings UAV, land robots), arms, sensors (laser rangers, cameras, IMU, etc), embedded computers, 3D printer, etc.
 
 
 Summary
