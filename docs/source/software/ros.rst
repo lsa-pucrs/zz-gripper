@@ -7,6 +7,8 @@ Installing ROS
 About ROS
 -----------------------------
 
+ROS (Robot Operating System) <http://wiki.ros.org/>`_ provides libraries and tools to help software developers create robot applications. It provides hardware abstraction, device drivers, libraries, visualizers, message-passing, package management, and more. ROS is licensed under an open source, BSD license.
+
 
 How to install the driver and its depedencies
 -----------------------------
