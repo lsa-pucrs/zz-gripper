@@ -42,11 +42,13 @@ The first step in installing ROS on Raspberry Pi 3 is :
 
 		sudo apt-get update
 
+
 - **Step 6:** Install ros-kinetic-desktop-full
 
 	.. code-block:: bash
 
 		sudo apt-get install ros-kinetic-desktop-full
+
 
 - **Step 7:** Initialize rosdep
 
@@ -55,12 +57,14 @@ The first step in installing ROS on Raspberry Pi 3 is :
 		sudo rosdep init
 		rosdep update
 
+
 - **Step 8:** Setting up the ROS environment variables
 
 	.. code-block:: bash
 
 		echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 		source ~/.bashrc
+
 
 - **Step 9:** Create and initialize the catkin workspace
 
@@ -73,6 +77,8 @@ The first step in installing ROS on Raspberry Pi 3 is :
 		cd ~/catkin_workspace/
 		catkin_make
 
+
+
 - **Step 10:** Add the catkin_workspace to your ROS environment
 
 	.. code-block:: bash
@@ -80,9 +86,12 @@ The first step in installing ROS on Raspberry Pi 3 is :
 		source ~/catkin_workspace/devel/setup.bash
 		echo “source ~/catkin_workspace/devel/setup.bash” >> ~/.bashrc
 
+
+
 - **Step 11:** Check the ROS environment variables
 
 	.. code-block:: bash
-	
+
 		export | grep ROS
+
 
