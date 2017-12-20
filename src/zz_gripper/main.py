@@ -23,7 +23,7 @@ class Gripper(object):
 			cv2.imshow("Video", cam.showImage)
 			cv2.imshow("Masked Video", img.masked(cam.showImage))
 			
-			if img.find_object(cam.showImage):
+			if img.find_object(img.masked(cam.showImage)):
 				if gripper.centralized(img.masked(cam.showImage),cam.showImage):
 					gripper.forward()
 				else:
