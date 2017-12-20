@@ -1,11 +1,11 @@
 # ZZ-Gripper v1.0
 
 #### Introdução:
-Robô desenvolvido no Laboratório de Sistemas Autônomos, [LSA](https://www.inf.pucrs.br/felipe.meneguzzi/lsa/), da FACIN na PUCRS.
+Robô desenvolvido no Laboratório de Sistemas Autônomos, [LSA](lsa-pucrs.github.io), da FACIN na PUCRS.
 Esta gripper foi desenvolvida no laboratório visando aplicações _pick-and-place_ em conjunto com o robo Turtlebot V2.
 
 <p align="center">
-<img src="resources/zz-gripper-turtle-rasp.jpg" width="310" height="281">
+<img src="docs/source/images/zz-gripper-turtle-rasp.jpg" width="310" height="281">
 </P>
 
 #### Especificações:
