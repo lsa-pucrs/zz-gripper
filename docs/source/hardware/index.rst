@@ -11,7 +11,8 @@ You will find a guide to setting up the hardware: Raspberry Pi and circuit schem
 .. WARNING::
 
   @ To be done !!! place here the fritzing schematics and 
-.. image:: ./source/images/schematics.jpg
+  
+.. image:: ./../images/schematics.jpg
     :align: center
     
 Hardware Specification
