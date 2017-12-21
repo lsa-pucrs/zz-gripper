@@ -1,4 +1,4 @@
-# ZZ-Gripper v1.0
+# ZZ-Gripper v2.0
 
 #### Introdução:
 Robô desenvolvido no Laboratório de Sistemas Autônomos, [LSA](https://lsa-pucrs.github.io/), da FACIN na PUCRS.
@@ -7,6 +7,13 @@ Esta gripper foi desenvolvida no laboratório visando aplicações _pick-and-pla
 <p align="center">
 <img src="docs/source/images/zz-gripper-turtle-rasp.jpg" width="310" height="281">
 </P>
+
+
+### Diferenças entre a V1.0 e V2.0
++ troca de um Arduino por uma Raspberry Pi 3
++ uso de câmera + OpenCV para processamento de imagem básico (blob finder)
++ firmware baseado em Python e ROS
+
 
 #### Especificações:
 + Microprocessador: Raspberry Pi versão 3
